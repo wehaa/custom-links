@@ -28,7 +28,7 @@ public function tools()
 }
 ```
 
-To publish the config file to config/custom-links.php run:
+To publish the config file to `config/custom-links.php` run:
 
 ```bash
 php artisan vendor:publish --provider="Wehaa\CustomLinks\ToolServiceProvider"
@@ -53,4 +53,28 @@ return [
     ]
 ];
 
+```
+
+The included config file will add some links you can use as an example. 
+
+## Authorization
+
+If you would like to only expose your links to certain users, you may chain the `canSee` method onto your tool's registration.
+
+```php
+// in app/Providers/NovaServiceProvider.php
+
+use Wehaa\CustomLinks\CustomLinks;
+
+// ...
+
+public function tools()
+{
+    return [
+        // ...
+        (new CustomLinks)->canSee(function ($request) {
+            return false;
+        }),
+    ];
+}
 ```
