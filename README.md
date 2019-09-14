@@ -40,11 +40,13 @@ To add links to the navigation section you need to add entries to the `links` se
 return [
     'links' => [
         '{TEXT}' => [                           // Top level section title text
+            '_can'    => '{PERMISSION}'         // The name of the permission
             '_icon'   => '{ICON}',              // SVG icon code (optional)
             '_url'    => '{URL}',               // URL (optional if _links is present)
             '_target' => '{TARGET}',            // Link target (optional) 
             '_links'  => [                      // Section extra links (optional if _url is present
                 '{TEXT}' => [                   // Sub section text
+                    '_can'    => '{PERMISSION}' // The name of the permission
                     '_url'    => '{URL}',       // URL
                     '_target' => '{TARGET}',    // Link target (optional)
                 ]
@@ -77,4 +79,25 @@ public function tools()
         }),
     ];
 }
+```
+
+In addition, you can add the key `_can` in the links array, including the child links as well. We will use the `can()` function to check if the user has the permission to see the links or not.
+
+Please note that if you don't want any authorization checks, do not add the `_can` key.
+
+```php
+return [
+    'links' => [
+        '{TEXT}' => [                           // Top level section title text
+            '_can'    => '{PERMISSION}'         // Checks if the link and sublinks can be shown
+            // ...
+            '_links'  => [                      // Section extra links (optional if _url is present
+                '{TEXT}' => [                   // Sub section text
+                    '_can'    => '{PERMISSION}' // Checks if the link can be shown
+                    // ...
+                ]
+            ]
+        ]
+    ]
+];
 ```
